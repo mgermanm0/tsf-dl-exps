@@ -1,0 +1,46 @@
+Esta carpeta contiene el código fuente usado en la experimentación del Trabajo Fin de Máster
+"Métodos de aprendizaje profundo para la predicción de series temporales"
+Elaborado por Manuel Germán Morales
+
+########################
+#    1. ESTRUCTURA     #
+########################
+
+La estructura de este directorio sigue tal que así:
+
+Directorios:
+    - data: Contiene los conjuntos de datos en crudo, formato .TSF
+    - data_prepo: Contiene los conjuntos de datos preprocesados, .pk
+    - experiments: Contiene los scripts relativos a la experimentación
+    - metrics: Contiene la implementación de la métrica WAPE usando torchmetrics, ya que no estaba incluida en el paquete
+    - models: Contiene la implementación de los modelos descrita en la memoria
+    - preprocess: Contiene utilidades para realizar el preprocesado de los datos (Detector y mitigador de outliers)
+    - results: Resultados obtenidos tras la experimentación, clasificados por dataset.
+    - utils: Utilidades relativas a la experimentación, script para cargar los ficheros .TSF
+
+Ficheros:
+    - config_mgm.py: Archivo que contiene todas las constantes usadas
+    - environment.yml: Descripción del entorno de anaconda usado para la experimentación.
+    - notifier.py: Herramienta para enviar mensajes a un canal de Telegram, usada para monitorizar la experimentación (desactivada actualmente)
+    - prepo_no_sliding.py: Script que genera los conjuntos de datos preprocesados, y los guarda en la carpeta data_prepo.
+    - rescollector.py: Utilidad para guardar los resultados de las ejecuciones
+    - slidingds.py: Clase SlidingWindowDataset que construye y almacena las ventanas deslizantes generadas a partir de un conjunto de datos.
+    - tsds.py: Clase TimeSeriesDataSet que construye y genera un conjunto de datos preprocesado, que será usado posteriomente por SlidingWindowDataset para la construcción de sus ventanas.
+
+###########################################
+#    2. REPLICACIÓN DEL ENTORNO CONDA     #
+###########################################
+
+1. Instale anaconda (https://www.anaconda.com/download)
+2. Configure las variables de entorno tal y como se especifica en su web.
+3. Abra una consola. Navegue hasta este directorio.
+4. Ejecute "conda env create -f environment.yml" para importar el entorno
+5. Ejecute "conda activate tfm-mgm" para activar el entorno importado. Ejecute, si lo desea, los scripts situados en la carpeta "experiments".
+
+#######################################
+#    3. EJECUCIÓN DE EXPERIMENTOS     #
+#######################################
+
+Navegue hacia la carpeta "experiments". Con el entorno tfm-mgm activado y, en una terminal, ejecute:
+"python3 MODELO_deep_general_iter.py -ds DATASET"
+donde DATASET={electricity, m1, m3, nn5, traffic} y MODELO={rnn, tcn}
